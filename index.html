@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTwitter App</title>
+    <script src="https://unpkg.com/vue@3.0.11"></script>
+</head>
+
+<body>
+    <!-- won't be written out -->
+    <!-- {{title}} -->
+
+    <!-- will be written out 'cause it's built inside App -->
+    <div id="app">
+        <h1>{{title}}</h1>
+
+        <form @submit.prevent="onSubmit">
+            <textarea v-model="item" required placeholder="Tweet here"></textarea>
+            <br />
+            <button type="submit">Submit</button>
+        </form>
+
+        {{items}}
+        <ul>
+            <li v-for="tweet in items" key="tweet.id">
+                <img style="width: 30px; height: 30px" :src="tweet.avatar" alt="avatar" />
+                <br />
+                <span>{{tweet.date}}</span>
+                <div>{{tweet.body}}</div>
+            </li>
+        </ul>
+
+    </div>
+    <script src="/App.js"></script>
+</body>
+
+</html>

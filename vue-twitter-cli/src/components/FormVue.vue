@@ -6,24 +6,50 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
 export default {
-    data () {
-        return {
-            body: '',
-        }
-    },
-    methods: {
-        onSubmit() {
-          this.$emit('onSubmit', {
+  // возможность описывать emits
+  emits: ['onSubmit'],
+  // emit содержится в контексте, чтобы к нему обратиться, нужно обратиться сначала
+  // к контексту context.emit
+  // либо использовать деструктуризацию
+  // первым параметром setup всегда идут prop, либо _, если не используем их
+  setup(_, { emit }) {
+    const body = ref('')
+
+    const onSubmit = () => {
+      emit('onSubmit', {
         id: Math.round(Math.random() * 10),
         avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Date.now()}`,
-        body: this.body,
+        body: body.value,
         likes: 3,
         date: new Date(Date.now()).toLocaleString(),
       })
-      // reset
-      this.body = "";
-    },
-  }
+      body.value = ''
     }
+    return {body, onSubmit}
+  }
+}
+
+// export default {
+//     data () {
+//         return {
+//             body: '',
+//         }
+//     },
+//     methods: {
+//         onSubmit() {
+//           this.$emit('onSubmit', {
+//         id: Math.round(Math.random() * 10),
+//         avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=${Date.now()}`,
+//         body: this.body,
+//         likes: 3,
+//         date: new Date(Date.now()).toLocaleString(),
+//       })
+//       // reset
+//       this.body = "";
+//     },
+//   }
+//     }
 </script>

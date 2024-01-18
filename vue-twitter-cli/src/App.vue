@@ -16,18 +16,20 @@
 <script>
 import TweetsList from '@/components/TweetsList';
 import FormVue from '@/components/FormVue'
+import { ref } from 'vue';
 
+// composition API
 export default {
   components: {TweetsList: TweetsList, FormVue: FormVue},
+  setup () {
 
-  data() {
-    return {
-      items: [
+    // реактивная константа для отслеживания изменений в массиве
+    const items = ref([
         {
           id: 1,
           avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=John`,
           body: "hello Vue3",
-          likes: 54,
+          likes: 55,
           date: new Date(Date.now()).toLocaleString(),
         },
         {
@@ -36,15 +38,49 @@ export default {
           body: "this is VTwitter App",
           likes: 22,
           date: new Date(Date.now()).toLocaleString(),
-        },
-      ],
-    };
-  },
-  methods: {
-    handleSubmit (item) {
-      console.log(item)
-      this.items.push(item)
+        }
+    ])
+    
+    // value содержится в proxy и содержит get и set 
+    const handleSubmit = item => items.value.push(item);
+
+    return {
+      items,
+      handleSubmit,
     }
-  },
+  }
+
 }
+
+// options API
+// export default {
+//   components: {TweetsList: TweetsList, FormVue: FormVue},
+
+//   data() {
+//     return {
+//       items: [
+//         {
+//           id: 1,
+//           avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=John`,
+//           body: "hello Vue3",
+//           likes: 54,
+//           date: new Date(Date.now()).toLocaleString(),
+//         },
+//         {
+//           id: 2,
+//           avatar: `https://api.dicebear.com/7.x/pixel-art/svg?seed=Jane`,
+//           body: "this is VTwitter App",
+//           likes: 22,
+//           date: new Date(Date.now()).toLocaleString(),
+//         },
+//       ],
+//     };
+//   },
+//   methods: {
+//     handleSubmit (item) {
+//       console.log(item)
+//       this.items.push(item)
+//     }
+//   },
+// }
 </script>
